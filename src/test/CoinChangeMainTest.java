@@ -32,7 +32,7 @@ public class CoinChangeMainTest {
 	}
 	
 	@Test
-	public void testCalculateNumOfWaysToSplitRecursively12() {
+	public void testCalculateNumOfWaysToSplitRecursively2() {
 		int numOfCoinTypes = 3;
 		
 		//to increase efficient by preventing the vector by resizing
@@ -45,6 +45,22 @@ public class CoinChangeMainTest {
 		
 		int[] queries = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 		int[] answers = {0, 1, 1, 2, 1, 3, 2, 4, 3, 5};
+		compareAnswers(queries, answers, coinChanger);
+		
+	}
+	
+	@Test
+	public void testCalculateNumOfWaysToSplitRecursively3() {
+		int numOfCoinTypes = 1;
+		
+		//to increase efficient by preventing the vector by resizing
+		Vector <Integer> coinTypes = new Vector <Integer>(numOfCoinTypes * 2);
+		coinTypes.add(3);
+		
+		CoinChangeMain coinChanger = new CoinChangeMain(coinTypes);
+		
+		int[] queries = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		int[] answers = {0, 0, 1, 0, 0, 1, 0, 0, 1, 0};
 		compareAnswers(queries, answers, coinChanger);
 		
 	}
