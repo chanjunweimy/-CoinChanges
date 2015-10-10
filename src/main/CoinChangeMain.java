@@ -16,22 +16,24 @@ public class CoinChangeMain {
 	
 	public CoinChangeMain(Vector <Integer> coinTypes) {
 		setCoinTypes(coinTypes);
-		
 		initializeMemory();
 	}
 
-	/**
-	 * 
-	 */
+	
 	private void initializeMemory() {
-		_memory = new int[DEFAULT_MAX_QUERY_VALUE][_coinTypes.size()];
+		_memory = new int[DEFAULT_MAX_QUERY_VALUE + 2][_coinTypes.size()];
 		resetMemory();
 	}
 	
+	/**
+	 * resetMemory is to resetMemory to all null values.
+	 * _memory[0][j] is for negative query values for each coinTypeIndex
+	 * _memory[1..DEFAULT_MAX_QUERY_VALUE+1][j] is for non-negative query values (i get by queryValue + 1) for each coinTypeIndex
+	 */
 	private void resetMemory() {
-		for (int i = 0; i < DEFAULT_MAX_QUERY_VALUE; i++) {
+		for (int i = 0; i <= DEFAULT_MAX_QUERY_VALUE + 1; i++) {
 			for (int j = 0; j < _coinTypes.size(); j++) {
-				_memory[i][j] = 0;
+				_memory[i][j] = -1;
 			}
 		}
 	}
@@ -48,10 +50,12 @@ public class CoinChangeMain {
 	 * @return
 	 */
 	public int calculateNumOfWaysToSplitRecursively(int queryValue, int coinTypeIndex) {	
-		
+		//check base cases
 		if (queryValue < 0) {
+			//if queryValue < 0, this combination does not work, return 0
 			return 0;
 		} else if (queryValue == 0) {
+			//if queryValue == 0, this combination works, return 1
 			return 1;
 		} else if (queryValue > DEFAULT_MAX_QUERY_VALUE) {
 			//let queryValue bounded by DEFAULT_MAX_QUERY_VALUE
@@ -59,14 +63,56 @@ public class CoinChangeMain {
 		} else {
 			//do nothing
 		}
-		
+				
+		int numOfWays = runRecursiveCases(queryValue, coinTypeIndex);
+		return numOfWays;
+	}
+
+
+	/**
+	 * The recursive case of calculateNumOfWaysToSplitRecursively()
+	 * @param queryValue
+	 * @param coinTypeIndex
+	 * @return
+	 */
+	private int runRecursiveCases(int queryValue, int coinTypeIndex) {
 		int numOfWays = 0; 
 		for (int i = coinTypeIndex; i < _coinTypes.size(); i++) {
 			int coinType = _coinTypes.get(i).intValue();
 			int newQueryValue = queryValue - coinType;
-			numOfWays += calculateNumOfWaysToSplitRecursively(newQueryValue, i);
+
+			int firstIndex = calculateFirstIndexOfMemory(newQueryValue);
+			
+			if (_memory[firstIndex][i] < 0) {
+				//run recursive case if it is not saved in memory before
+				int curNumOfWays = calculateNumOfWaysToSplitRecursively(newQueryValue, i);
+				_memory[firstIndex][i] = curNumOfWays;
+				
+			} else {
+				//if it is inside the memory. do nothing
+			}
+
+			numOfWays += _memory[firstIndex][i];
 		}
 		return numOfWays;
+	}
+
+
+	/**
+	 * calculate the first index of the _memory
+	 * if the queryValue is less than 0, then set to 0, as all negative values will led to the same result: 0
+	 * else firstIndex = queryValue + 1 
+	 * @param queryValue
+	 * @return
+	 */
+	private int calculateFirstIndexOfMemory(int queryValue) {
+		int firstIndex;
+		if (queryValue < 0) {
+			firstIndex = 0;
+		} else {
+			firstIndex = queryValue + 1;
+		}
+		return firstIndex;
 	}
 	
 	public static void main(String[] args) {
