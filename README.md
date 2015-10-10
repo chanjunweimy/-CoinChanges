@@ -39,18 +39,18 @@ there is only 1 way to split, which is 1
 
 for 2nd query: 9,
 there are 12 ways to split:
-1: 1 1 1 1 1 1 1 1 1
-2: 1 1 1 1 1 1 1 2
-3: 1 1 1 1 1 2 2
-4: 1 1 1 2 2 2
-5: 1 2 2 2 2
-6: 1 1 1 1 1 1 3
-7: 1 1 1 3 3
-8: 3 3 3 
-9: 1 1 1 1 2 3
-10: 1 1 2 2 3
-11: 2 2 2 3
-12: 1 2 3 3
+* 1: 1 1 1 1 1 1 1 1 1
+* 2: 1 1 1 1 1 1 1 2
+* 3: 1 1 1 1 1 2 2
+* 4: 1 1 1 2 2 2
+* 5: 1 2 2 2 2
+* 6: 1 1 1 1 1 1 3
+* 7: 1 1 1 3 3
+* 8: 3 3 3 
+* 9: 1 1 1 1 2 3
+* 10: 1 1 2 2 3
+* 11: 2 2 2 3
+* 12: 1 2 3 3
 
 ### Solution
 The solution is given inside the [src folder](https://github.com/chanjunweimy/-CoinChanges/tree/master/src)
